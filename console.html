@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>1100 Brain — Console</title>
+<meta name="description" content="The 1100 Brain Console — a live operations brain across all eight restaurants. An Endurance AI Labs solution for the 1100 Group." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --gold:#FCB236; --gold-bright:#ECC81C; --red:#C8202C; --teal:#60C6C9; --green:#3FA66A;
+    --amber:#E9A93B; --ink:#1A1A1A; --bg:#161618; --panel:#202228; --panel2:#23262d;
+    --sidebar:#121214; --line:rgba(255,255,255,.08); --light:#E7E7E7; --muted:#8a8b92; --dim:#63646b;
+    --sans:'Montserrat',sans-serif; --body:'Roboto',sans-serif; --mono:'Space Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--light);font-family:var(--body);font-weight:300}
+  a{color:inherit;text-decoration:none}
+  ::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#2c2e35;border-radius:6px}
+
+  /* LIVE BANNER */
+  .live-banner{position:fixed;top:0;left:0;right:0;height:38px;z-index:60;display:flex;align-items:center;gap:14px;
+    padding:0 18px;background:#0e0e10;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+  .live-banner .pill{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--ink);
+    background:var(--gold);border-radius:5px;padding:3px 8px}
+  .live-banner b{color:var(--light);font-weight:500}
+  .live-banner .out{margin-left:auto;color:var(--gold);font-family:var(--sans);font-weight:600;font-size:12.5px}
+
+  /* SIDEBAR */
+  .sidebar{position:fixed;top:38px;bottom:0;left:0;width:236px;background:var(--sidebar);border-right:1px solid var(--line);
+    display:flex;flex-direction:column;padding:18px 14px;z-index:40}
+  .logo{display:flex;align-items:center;gap:11px;padding:6px 8px 18px}
+  .logo .mk{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-family:var(--sans);font-weight:900;font-size:15px;
+    background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:var(--ink);box-shadow:0 0 18px rgba(252,178,54,.4)}
+  .logo .nm{font-family:var(--sans);font-weight:800;font-size:15px;color:#fff;line-height:1.1}
+  .logo .nm small{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;letter-spacing:.18em;color:var(--dim);margin-top:2px}
+  .navgrp{margin-top:14px}
+  .navgrp .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:var(--dim);padding:0 10px;margin-bottom:7px}
+  .navgrp a{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:9px;font-family:var(--sans);font-size:13.5px;font-weight:500;color:var(--muted);transition:.15s;margin-bottom:2px}
+  .navgrp a:hover{color:#fff;background:rgba(255,255,255,.05)}
+  .navgrp a.on{color:var(--ink);background:linear-gradient(135deg,var(--gold),var(--gold-bright));font-weight:700}
+  .navgrp a .ic{width:17px;text-align:center;font-size:14px}
+  .navgrp a .cnt{margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:700;background:var(--red);color:#fff;border-radius:20px;padding:1px 7px}
+  .user{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-top:1px solid var(--line)}
+  .user .av{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-family:var(--sans);font-weight:800;font-size:12px;background:#2c2e35;color:var(--gold)}
+  .user .un{font-family:var(--sans);font-weight:600;font-size:13px;color:#fff}
+  .user .ur{font-size:11px;color:var(--dim)}
+
+  /* MAIN */
+  .main{margin-left:236px;margin-top:38px;min-height:calc(100vh - 38px)}
+  .topbar{position:sticky;top:38px;z-index:30;display:flex;align-items:center;gap:16px;padding:14px 26px;
+    background:rgba(22,22,24,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .search{flex:1;max-width:540px;display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);
+    border-radius:11px;padding:11px 14px;color:var(--muted);font-size:14px;cursor:text}
+  .search .kbd{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--dim);border:1px solid var(--line);border-radius:5px;padding:2px 6px}
+  .topbar .bell{margin-left:auto;font-size:17px;color:var(--muted);position:relative;cursor:pointer}
+  .topbar .bell::after{content:"";position:absolute;top:-1px;right:-1px;width:7px;height:7px;border-radius:50%;background:var(--red)}
+  .topbar .me{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;font-family:var(--sans);font-weight:800;font-size:12px;background:#2c2e35;color:var(--gold)}
+
+  .content{padding:34px 26px 90px;max-width:1280px}
+  .crumb{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--dim);margin-bottom:10px}
+  .h1{font-family:var(--sans);font-weight:800;font-size:34px;color:#fff;letter-spacing:-.6px}
+  .sub{color:var(--muted);font-size:15px;margin-top:8px}
+  .head-row{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .head-actions{display:flex;gap:10px;flex-shrink:0;margin-top:6px}
+  .btn{font-family:var(--sans);font-weight:600;font-size:13.5px;border-radius:10px;padding:11px 16px;cursor:pointer;border:1px solid var(--line);transition:.15s;display:inline-flex;align-items:center;gap:7px}
+  .btn.ghost{background:var(--panel);color:var(--light)}
+  .btn.ghost:hover{border-color:var(--gold);color:#fff}
+  .btn.dark{background:#0e0e10;color:#fff;border-color:#0e0e10}
+  .btn.dark:hover{background:#000}
+  .btn.gold{background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:var(--ink);border:0;font-weight:700}
+
+  /* STAT CARDS */
+  .stats{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:16px;margin-top:26px}
+  .stats .right2{display:grid;grid-template-rows:1fr 1fr;gap:16px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 22px}
+  .stat .k{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--muted);display:flex;align-items:center;gap:7px;text-transform:uppercase}
+  .stat .k .d{width:7px;height:7px;border-radius:50%}
+  .stat .v{font-family:var(--sans);font-weight:800;font-size:34px;color:#fff;margin-top:10px;line-height:1}
+  .stat .cap{font-size:13px;color:var(--muted);margin-top:7px}
+  .memory{grid-row:span 2;background:linear-gradient(165deg,#1f2228,#15171b);border:1px solid rgba(252,178,54,.2);position:relative;overflow:hidden}
+  .memory::before{content:"";position:absolute;top:-40%;right:-20%;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(252,178,54,.16),transparent 70%)}
+  .memory .v{font-size:46px;color:var(--gold)}
+  .memory .bar{height:6px;border-radius:6px;background:rgba(255,255,255,.1);margin:18px 0 10px;overflow:hidden}
+  .memory .bar>i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright))}
+  .memory .meta{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+  .memory .btn{margin-top:20px}
+  .smallcards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:1080px){.stats{grid-template-columns:1fr 1fr}.memory{grid-column:span 2;grid-row:auto}.smallcards{grid-column:span 2;grid-template-columns:1fr 1fr 1fr 1fr}}
+  @media(max-width:680px){.smallcards{grid-template-columns:1fr 1fr}}
+
+  /* LOWER GRID */
+  .lower{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-top:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px}
+  .card .ch{display:flex;align-items:center;gap:12px;padding:20px 22px 14px}
+  .card .ch h3{font-family:var(--sans);font-weight:800;font-size:18px;color:#fff}
+  .seg{margin-left:auto;display:flex;gap:4px}
+  .seg span{font-family:var(--sans);font-size:11.5px;font-weight:600;color:var(--muted);padding:5px 10px;border-radius:7px;cursor:pointer}
+  .seg span.on{background:#0e0e10;color:#fff}
+  .ch .auto{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--dim)}
+
+  table.look{width:100%;border-collapse:collapse}
+  table.look th{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;text-align:left;padding:6px 22px;font-weight:400}
+  table.look td{padding:13px 22px;border-top:1px solid var(--line);vertical-align:middle;font-size:13.5px}
+  table.look tr:hover td{background:rgba(255,255,255,.02)}
+  .it .nm{font-family:var(--sans);font-weight:600;color:#fff;display:flex;align-items:center;gap:9px}
+  .it .nm .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  .it .meta{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:3px;margin-left:17px}
+  .need{color:var(--muted)}
+  .srcn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .act{font-family:var(--sans);font-weight:700;font-size:12.5px;color:var(--gold);cursor:pointer;white-space:nowrap}
+  .act.rev{color:var(--teal)}
+  .look-foot{display:flex;align-items:center;justify-content:space-between;padding:16px 22px}
+  .look-foot a{font-family:var(--sans);font-weight:600;font-size:13px;color:var(--teal)}
+
+  /* COMING UP */
+  .up{padding:6px 22px 20px}
+  .up .day{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--dim);margin:14px 0 8px}
+  .up .row{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+  .up .row . av{width:30px;height:30px;border-radius:8px;flex:0 0 auto;display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:700;background:#2c2e35;color:var(--gold)}
+  .up .row .t{font-family:var(--sans);font-weight:600;font-size:13.5px;color:#fff}
+  .up .row .s{font-size:11.5px;color:var(--dim);margin-top:2px}
+  .up .row .tm{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .draftbox{margin:8px 22px 22px;background:rgba(252,178,54,.07);border:1px solid rgba(252,178,54,.22);border-radius:13px;padding:18px}
+  .draftbox h4{font-family:var(--sans);font-weight:700;font-size:14px;color:#fff}
+  .draftbox p{font-size:12.5px;color:var(--muted);margin:5px 0 14px}
+  .draftbox .btn{width:100%;justify-content:center}
+  @media(max-width:980px){.lower{grid-template-columns:1fr}}
+
+  /* RECENT */
+  .recent{margin-top:16px}
+  .recent .ch a{margin-left:auto;font-family:var(--sans);font-weight:600;font-size:13px;color:var(--teal)}
+  .ans{padding:14px 22px;border-top:1px solid var(--line)}
+  .ans .q{font-family:var(--sans);font-weight:600;color:#fff;font-size:14px}
+  .ans .a{font-size:13.5px;color:var(--muted);margin-top:5px}
+  .ans .cite{font-family:var(--mono);font-size:11px;color:var(--teal);margin-top:7px;display:flex;flex-wrap:wrap;gap:5px 14px}
+
+  /* FAB + ASK PANEL */
+  .fab{position:fixed;right:26px;bottom:24px;z-index:55;font-family:var(--sans);font-weight:700;font-size:14px;color:var(--ink);
+    background:linear-gradient(135deg,var(--gold),var(--gold-bright));border:0;border-radius:30px;padding:14px 22px;cursor:pointer;
+    box-shadow:0 12px 30px rgba(252,178,54,.4)}
+  .fab:hover{transform:translateY(-2px)}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:70;opacity:0;visibility:hidden;transition:.25s}
+  .scrim.on{opacity:1;visibility:visible}
+  .ask{position:fixed;top:0;right:0;bottom:0;width:440px;max-width:92vw;z-index:80;background:#161618;border-left:1px solid var(--line);
+    transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column}
+  .ask.on{transform:none}
+  .ask-h{display:flex;align-items:center;gap:10px;padding:18px 20px;border-bottom:1px solid var(--line)}
+  .ask-h .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+  .ask-h .t{font-family:var(--sans);font-weight:700;color:#fff;font-size:15px}
+  .ask-h .x{margin-left:auto;color:var(--muted);font-size:20px;cursor:pointer;background:0;border:0}
+  .ask-msgs{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+  .m{max-width:88%;font-size:14px;line-height:1.6;padding:12px 15px;border-radius:15px}
+  .m.you{align-self:flex-end;background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:var(--ink);font-weight:500;border-bottom-right-radius:5px}
+  .m.brain{align-self:flex-start;background:var(--panel);border:1px solid var(--line);color:var(--light);border-bottom-left-radius:5px}
+  .m.brain b{color:#fff;font-weight:600}
+  .m .who{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px}
+  .m .cite{font-family:var(--mono);font-size:10.5px;color:var(--teal);margin-top:8px;display:block}
+  .typing{display:flex;gap:5px;padding:14px 15px}.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:bl 1.2s infinite}
+  .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+  @keyframes bl{0%,60%,100%{opacity:.25}30%{opacity:1}}
+  .ask-foot{padding:14px 20px;border-top:1px solid var(--line)}
+  .ask-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:11px}
+  .ask-chips button{font-family:var(--sans);font-size:12.5px;color:var(--light);background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:30px;padding:7px 12px;cursor:pointer}
+  .ask-chips button:hover{border-color:var(--gold);color:var(--gold)}
+  .ask-in{display:flex;gap:8px}
+  .ask-in input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:30px;padding:11px 15px;color:var(--light);font-family:var(--body);font-size:13.5px;outline:none}
+  .ask-in input:focus{border-color:var(--gold)}
+  .ask-in button{background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:var(--ink);border:0;border-radius:30px;font-family:var(--sans);font-weight:700;padding:0 18px;cursor:pointer}
+
+  @media(max-width:900px){.sidebar{display:none}.main{margin-left:0}}
+</style>
+</head>
+<body>
+
+  <div class="live-banner">
+    <span class="pill">LIVE DEMO</span>
+    <span>Everything you see is <b>sample data</b> — restaurants are real; figures &amp; sources are illustrative.</span>
+    <a class="out" href="index.html">1100 Group ↗</a>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <span class="mk">E</span>
+      <span class="nm">1100 Brain<small>CONSOLE</small></span>
+    </div>
+    <div class="navgrp">
+      <div class="lbl">OVERVIEW</div>
+      <a class="on"><span class="ic">▦</span> Today</a>
+    </div>
+    <div class="navgrp">
+      <div class="lbl">KNOWLEDGE</div>
+      <a><span class="ic">💬</span> Ask Brain</a>
+      <a><span class="ic">🍽</span> Restaurants</a>
+      <a><span class="ic">📄</span> Documents</a>
+      <a><span class="ic">👥</span> People &amp; Staff</a>
+    </div>
+    <div class="navgrp">
+      <div class="lbl">AUTOMATION</div>
+      <a><span class="ic">⚡</span> Requests</a>
+      <a><span class="ic">🔁</span> Automations</a>
+    </div>
+    <div class="navgrp">
+      <div class="lbl">OVERSIGHT</div>
+      <a><span class="ic">🛡</span> Review <span class="cnt">2</span></a>
+    </div>
+    <div class="user">
+      <span class="av">SO</span>
+      <div><div class="un">Shannon Orr</div><div class="ur">Operations</div></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <header class="topbar">
+      <div class="search" id="openSearch">🔎 Ask anything across every restaurant, ticket &amp; review… <span class="kbd">⌘K</span></div>
+      <span class="bell">🔔</span>
+      <span class="me">SO</span>
+    </header>
+
+    <div class="content">
+      <div class="crumb">OVERVIEW · TODAY</div>
+      <div class="head-row">
+        <div>
+          <div class="h1">Today with your Brain</div>
+          <div class="sub">Everything the Brain ingested, answered, and ran across all eight restaurants — and what's waiting on you.</div>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost">Export</button>
+          <button class="btn dark">↑ Connect a source</button>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats">
+        <div class="stat memory">
+          <div class="k"><span class="d" style="background:var(--gold)"></span> IN MEMORY</div>
+          <div class="v">61,284</div>
+          <div class="cap">sources ingested · across <b style="color:#fff">8 restaurants</b> &amp; 11 systems</div>
+          <div class="bar"><i></i></div>
+          <div class="meta">100% CITED · 0 HALLUCINATIONS</div>
+          <button class="btn gold ask-open">Ask the Brain →</button>
+        </div>
+        <div class="right2">
+          <div class="stat">
+            <div class="k"><span class="d" style="background:var(--green)"></span> ANSWERS TODAY</div>
+            <div class="v">132</div>
+            <div class="cap">every one cited</div>
+          </div>
+          <div class="stat">
+            <div class="k"><span class="d" style="background:var(--dim)"></span> AVG ANSWER</div>
+            <div class="v">1.2s</div>
+            <div class="cap">with sources</div>
+          </div>
+        </div>
+        <div class="right2">
+          <div class="stat">
+            <div class="k"><span class="d" style="background:var(--red)"></span> NEEDS REVIEW</div>
+            <div class="v">2</div>
+            <div class="cap">waiting on you</div>
+          </div>
+          <div class="stat">
+            <div class="k"><span class="d" style="background:var(--amber)"></span> AUTOMATIONS</div>
+            <div class="v">6</div>
+            <div class="cap">running 24/7</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOWER -->
+      <div class="lower">
+        <div class="card">
+          <div class="ch">
+            <h3>Needs a look</h3>
+            <div class="seg"><span class="on">All 6</span><span>2 approvals</span><span>4 flags</span></div>
+          </div>
+          <table class="look">
+            <tr><th style="width:30%">Item</th><th>What the Brain needs</th><th style="width:60px">Src</th><th style="width:80px"></th></tr>
+            <tr>
+              <td class="it"><div class="nm"><span class="dot" style="background:var(--red)"></span>Friday schedule</div><div class="meta">The Star on Grand</div></td>
+              <td class="need">Drafted — awaiting your approval to post</td>
+              <td class="srcn">5</td><td><span class="act ask-open">Approve</span></td>
+            </tr>
+            <tr>
+              <td class="it"><div class="nm"><span class="dot" style="background:var(--red)"></span>Vendor switch</div><div class="meta">Little Star Valencia</div></td>
+              <td class="need">Mozzarella supplier swap drafted — approve to send</td>
+              <td class="srcn">3</td><td><span class="act ask-open">Approve</span></td>
+            </tr>
+            <tr>
+              <td class="it"><div class="nm"><span class="dot" style="background:var(--amber)"></span>Labor variance</div><div class="meta">The Star on Park</div></td>
+              <td class="need">Ran 3 pts over forecast Friday — confirm</td>
+              <td class="srcn">4</td><td><span class="act rev ask-open">Review</span></td>
+            </tr>
+            <tr>
+              <td class="it"><div class="nm"><span class="dot" style="background:var(--amber)"></span>Reservations</div><div class="meta">Bar Camino</div></td>
+              <td class="need">Party of 8 high no-show risk tonight</td>
+              <td class="srcn">3</td><td><span class="act rev ask-open">Review</span></td>
+            </tr>
+            <tr>
+              <td class="it"><div class="nm"><span class="dot" style="background:var(--amber)"></span>Review reply</div><div class="meta">Cato's Ale House</div></td>
+              <td class="need">2-star drafted in Cato's voice — open to send</td>
+              <td class="srcn">2</td><td><span class="act rev ask-open">Review</span></td>
+            </tr>
+            <tr>
+              <td class="it"><div class="nm"><span class="dot" style="background:var(--amber)"></span>Food cost</div><div class="meta">Ben 'N Nick's</div></td>
+              <td class="need">Beef cost +6% WoW — confirm new price</td>
+              <td class="srcn">1</td><td><span class="act rev ask-open">Review</span></td>
+            </tr>
+          </table>
+          <div class="look-foot">
+            <a href="#">View all flags →</a>
+            <button class="btn dark ask-open">✦ Let the Brain resolve</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><h3>Coming up</h3><span class="auto">AUTOMATED · TODAY</span></div>
+          <div class="up">
+            <div class="day">TODAY</div>
+            <div class="row"><span class="av">🕖</span><div><div class="t">Daily sales digest</div><div class="s">Auto-compiled · emailed to GMs</div></div><span class="tm">7:00 AM</span></div>
+            <div class="row"><span class="av">ST</span><div><div class="t">Pre-shift brief — The Star</div><div class="s">Covers forecast + 86 list</div></div><span class="tm">2:00 PM</span></div>
+            <div class="day">TOMORROW</div>
+            <div class="row"><span class="av">OT</span><div><div class="t">Reservation re-sync</div><div class="s">OpenTable · all 6 locations</div></div><span class="tm">6:00 AM</span></div>
+            <div class="row"><span class="av">YG</span><div><div class="t">Review sweep</div><div class="s">Yelp / Google · new + reply drafts</div></div><span class="tm">9:00 AM</span></div>
+          </div>
+          <div class="draftbox">
+            <h4>Draft today's promo</h4>
+            <p>The Brain can prep a cited campaign for each location — happy hour, Taco Tuesday, slow-night pushes.</p>
+            <button class="btn gold ask-open">Draft with the Brain →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT -->
+      <div class="card recent">
+        <div class="ch"><h3>Recent answers</h3><a href="#" class="ask-open">View all →</a></div>
+        <div class="ans">
+          <div class="q">How did the group do last Friday?</div>
+          <div class="a">Net sales beat the 4-week average. The Star on Grand and Little Star Valencia led on covers; Cato's had a big bar night.</div>
+          <div class="cite">↳ toast/group-2026-06-27 &nbsp; ↳ opentable/covers &nbsp; ✓ 3 cited</div>
+        </div>
+        <div class="ans">
+          <div class="q">Which location has the best margin this month?</div>
+          <div class="a">Little Star Solano — tight food cost and steady labor. Bar Camino close behind on margarita mix.</div>
+          <div class="cite">↳ toast/pnl-june &nbsp; ↳ inventory/par-levels &nbsp; ✓ 4 cited</div>
+        </div>
+        <div class="ans">
+          <div class="q">Where is food cost creeping up?</div>
+          <div class="a">Mozzarella up across the Star / Little Star kitchens — Valencia and Park most affected. Albany's vendor is ~9% cheaper.</div>
+          <div class="cite">↳ invoices/vendor-mozz &nbsp; ↳ recipes/deep-dish &nbsp; ✓ 2 cited</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <button class="fab ask-open">✦ Ask the Brain</button>
+
+  <!-- ASK PANEL -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="ask" id="ask">
+    <div class="ask-h"><span class="dot"></span><span class="t">Ask the 1100 Brain</span><button class="x" id="askClose">✕</button></div>
+    <div class="ask-msgs" id="askMsgs">
+      <div class="m brain"><span class="who">1100 Brain</span>I'm watching all eight restaurants in real time — and every answer cites its source. Tap a question or type your own.</div>
+    </div>
+    <div class="ask-foot">
+      <div class="ask-chips" id="askChips"></div>
+      <div class="ask-in"><input id="askIn" type="text" placeholder="Ask the 1100 Brain…" autocomplete="off" /><button id="askSend">Ask</button></div>
+    </div>
+  </aside>
+
+<script>
+  var scrim=document.getElementById('scrim'),ask=document.getElementById('ask'),msgs=document.getElementById('askMsgs'),
+      chips=document.getElementById('askChips'),inp=document.getElementById('askIn'),send=document.getElementById('askSend');
+  function open(){ask.classList.add('on');scrim.classList.add('on')}
+  function close(){ask.classList.remove('on');scrim.classList.remove('on')}
+  document.querySelectorAll('.ask-open').forEach(function(b){b.addEventListener('click',open)});
+  document.getElementById('openSearch').addEventListener('click',open);
+  document.getElementById('askClose').addEventListener('click',close);
+  scrim.addEventListener('click',close);
+
+  var QA=[
+    {q:'How did the group do last Friday?',a:'Friday net sales beat the four-week average. <b>The Star on Grand</b> and <b>Little Star Valencia</b> led on covers; <b>Cato’s</b> had a big bar night. One flag: <b>The Star on Park</b> ran ~3 pts over on labor.',c:'↳ toast/group-2026-06-27 · opentable/covers · ✓ 3 cited'},
+    {q:'Any reservations at risk tonight?',a:'Two. A <b>party of 8 at The Star on Grand</b> shows high no-show risk — I can send a confirmation text. And a 6-top at <b>Bar Camino</b> hasn’t responded. The other six locations look clean.',c:'↳ opentable/grand · opentable/bar-camino · ✓ 2 cited'},
+    {q:'Where is food cost creeping up?',a:'Mozzarella is up across the Star / Little Star kitchens this week — <b>Valencia</b> and <b>Park</b> most affected. Your <b>Albany</b> vendor is ~9% cheaper. Want me to draft the switch?',c:'↳ invoices/vendor-mozz · recipes/deep-dish · ✓ 2 cited'},
+    {q:'What should I promote at Bar Camino?',a:'Margaritas. Sales spike on Warriors home nights and the Thursday reverse-happy-hour. Push a <b>margarita + birria taco</b> bundle Thu–Sat and pre-batch — lifts bar covers without adding labor.',c:'↳ toast/bar-camino-mix · calendar/events · ✓ 3 cited'},
+    {q:'Which location needs a manager’s attention?',a:'<b>The Star on Park</b> — labor ran over Friday and two reviews mention slow service. I’ve drafted a pre-shift note and flagged the GM. <b>Little Star Solano</b> is your strongest this week.',c:'↳ reviews/yelp-park · toast/labor · ✓ 4 cited'}
+  ];
+  var DEF='Once 1100’s systems are connected, I answer that from live data across all eight restaurants — every claim cited. In this demo, try a suggested question to see how I reason.';
+  QA.forEach(function(x,i){var b=document.createElement('button');b.textContent=x.q;b.dataset.i=i;chips.appendChild(b)});
+  function scroll(){msgs.scrollTop=msgs.scrollHeight}
+  function you(t){var d=document.createElement('div');d.className='m you';d.textContent=t;msgs.appendChild(d);scroll()}
+  function brain(html,cite){var d=document.createElement('div');d.className='m brain';d.innerHTML='<span class="who">1100 Brain</span>'+html+(cite?'<span class="cite">'+cite+'</span>':'');msgs.appendChild(d);scroll()}
+  var busy=false;
+  function answer(q,html,cite){if(busy)return;busy=true;you(q);
+    var t=document.createElement('div');t.className='m brain typing';t.innerHTML='<i></i><i></i><i></i>';msgs.appendChild(t);scroll();
+    setTimeout(function(){t.remove();brain(html,cite);busy=false},820)}
+  chips.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var x=QA[b.dataset.i];answer(x.q,x.a,x.c)});
+  function handle(){var v=inp.value.trim();if(!v||busy)return;inp.value='';var h=QA.find(function(x){return x.q.toLowerCase()===v.toLowerCase()});answer(v,h?h.a:DEF,h?h.c:'')}
+  send.addEventListener('click',handle);
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')handle()});
+  if(location.hash==='#ask')open();
+</script>
+</body>
+</html>
