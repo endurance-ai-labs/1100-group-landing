@@ -7,7 +7,7 @@
 <meta name="description" content="A synchronized AI operating system for the 1100 Group — consolidating all eight restaurants into one connected brain that learns, reports, and acts as a group or individually." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
   :root{
     /* 1100 Group brand system (pulled from 1100group.com) */
@@ -25,6 +25,7 @@
     --body:#9a9ba0;
     --font-head:'Montserrat',sans-serif;
     --font-body:'Roboto',sans-serif;
+    --font-mono:'Space Mono',ui-monospace,monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -259,6 +260,55 @@
   .why-panel .quote{font-size:16px;color:var(--light);font-style:italic;line-height:1.7;border-left:3px solid var(--gold);padding-left:18px;margin-top:18px}
   @media(max-width:820px){.why{grid-template-columns:1fr;gap:30px}}
 
+  /* orange Console nav tab */
+  .btn-console{background:linear-gradient(135deg,#F2741B,#FF8A1E);color:#fff;box-shadow:0 8px 26px rgba(242,116,27,.34)}
+  .btn-console:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(242,116,27,.55)}
+
+  .mid{margin-left:auto;margin-right:auto;text-align:center}
+
+  /* ---------- TRUST / TERMINAL ---------- */
+  .term{background:#0f0f10;border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.5);font-family:var(--font-mono)}
+  .term-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#1a1a1c;border-bottom:1px solid rgba(255,255,255,.07)}
+  .term-bar .d{width:11px;height:11px;border-radius:50%}
+  .term-bar .d.r{background:#ff5f56}.term-bar .d.y{background:#ffbd2e}.term-bar .d.g{background:#27c93f}
+  .term-bar .ttl{margin-left:8px;font-size:12px;color:var(--body);letter-spacing:.02em}
+  .term-body{padding:20px 20px 22px;font-size:13px;line-height:1.75}
+  .term-body .q{color:var(--gold)}
+  .term-body .a{color:var(--light)}
+  .term-body .src{color:var(--body)}
+  .term-body .src .lk{color:var(--teal)}
+  .term-body b{color:#fff;font-weight:700}
+  .term-body .ok{color:#6BCB8B}
+  .term-body .lint{color:var(--body)}
+  .term-body .sp{display:block;height:12px}
+
+  /* ---------- VS / COMPARISON ---------- */
+  .vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:50px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+  .vs-card{padding:32px 30px;background:rgba(255,255,255,.02)}
+  .vs-card.good{background:linear-gradient(180deg,rgba(252,178,54,.08),rgba(252,178,54,.02));border-left:1px solid rgba(252,178,54,.2)}
+  .vs-card h3{font-family:var(--font-head);font-size:16px;font-weight:700;margin-bottom:20px}
+  .vs-card.bad h3{color:var(--body)}
+  .vs-card.good h3{color:var(--gold)}
+  .vs-list{list-style:none;display:grid;gap:15px}
+  .vs-list li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;line-height:1.45}
+  .vs-card.bad li{color:var(--body)}
+  .vs-card.good li{color:var(--light)}
+  .vs-list .ic{flex:0 0 auto;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;margin-top:1px}
+  .vs-card.bad .ic{background:rgba(200,32,44,.16);color:#e0606a}
+  .vs-card.good .ic{background:rgba(252,178,54,.18);color:var(--gold)}
+  @media(max-width:680px){.vs-grid{grid-template-columns:1fr}.vs-card.good{border-left:0;border-top:1px solid rgba(252,178,54,.2)}}
+
+  /* ---------- SECURITY ---------- */
+  .sec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:50px}
+  .sec-card{background:var(--slate);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:26px 22px;transition:transform .26s,border-color .26s}
+  .sec-card:hover{transform:translateY(-5px);border-color:rgba(252,178,54,.3)}
+  .sec-card .ico{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;font-size:20px;background:rgba(252,178,54,.14);margin-bottom:16px}
+  .sec-card h4{font-family:var(--font-head);font-weight:700;font-size:15px;color:#fff;margin-bottom:8px}
+  .sec-card p{font-size:13.5px;color:var(--body);line-height:1.55}
+  @media(max-width:880px){.sec-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.sec-grid{grid-template-columns:1fr}}
+
   /* ---------- CTA ---------- */
   .cta{
     text-align:center;border-radius:28px;margin:0 28px;
@@ -297,6 +347,7 @@
       <a href="#connect">Integrations</a>
       <a href="#portfolio">Portfolio</a>
       <a href="#contact" class="btn btn-gold">Book a Walkthrough</a>
+      <a href="https://endurancelabs.ai/brain/demo" target="_blank" rel="noopener" class="btn btn-console">▶ Console</a>
     </nav>
   </div>
 </header>
@@ -767,6 +818,88 @@
       <h4>A pilot, not a leap of faith.</h4>
       <p style="color:var(--body);margin-top:10px;font-size:15px">We'd stand up the Brain on one restaurant first — wire in its POS, reviews and labor — and show it working in weeks. Once it earns its keep, we connect the other seven and the cross-location learning kicks in.</p>
       <div class="quote">Eight restaurants that learn from each other beat eight restaurants that don't — every single week.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST / CITATIONS -->
+<section id="trust">
+  <div class="wrap why reveal">
+    <div>
+      <span class="eyebrow">Trust by construction</span>
+      <h2 class="title">If it can't cite it,<br><span class="gold">it won't claim it.</span></h2>
+      <p class="lead" style="max-width:none">The 1100 Brain is built around a single hard rule: <strong style="color:#fff">every fact must trace to a real source.</strong> It rejects any synthesized claim that isn't backed by a link to the underlying ticket, reservation, review or report.</p>
+      <ul>
+        <li><span class="ck">✓</span><div><strong>Born from a real failure mode</strong> — generic AI tools state confident answers with zero evidence. The citation rule means that can never happen silently.</div></li>
+        <li><span class="ck">✓</span><div><strong>When the data is thin, the Brain says so</strong> — rather than filling the gap with confident fiction.</div></li>
+        <li><span class="ck">✓</span><div><strong>Every answer is one click from the source</strong> — the Toast ticket, the OpenTable booking, the Yelp review it came from.</div></li>
+      </ul>
+    </div>
+    <div>
+      <div class="term">
+        <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="ttl">ask · 1100-brain</span></div>
+        <div class="term-body">
+          <span class="q">&gt; Who runs The Star on Park and how did Friday go?</span>
+          <span class="sp"></span>
+          <span class="a">The Star on Park (Alameda) is led by its <b>GM</b>.</span><br>
+          <span class="src">↳ source: <span class="lk">[[toast/park-2026-06-27-close]]</span></span><br>
+          <span class="a">Friday net sales up <b>12% WoW</b>; labor ran <b>3 pts</b> over.</span><br>
+          <span class="a">Mozzarella flagged on the deep-dish line — open item.</span><br>
+          <span class="src">↳ source: <span class="lk">[[opentable/park-covers]]</span></span><br>
+          <span class="src">↳ source: <span class="lk">[[reviews/yelp-2026-06]]</span></span>
+          <span class="sp"></span>
+          <span class="ok">✓ 3 claims · 3 cited · 0 unverified</span><br>
+          <span class="lint">lint: no contradictions · sources current</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOT RAG -->
+<section id="different" style="background:linear-gradient(180deg,#1a1a1c,#161618)">
+  <div class="wrap reveal">
+    <div style="text-align:center">
+      <span class="eyebrow">Why it's different</span>
+      <h2 class="title" style="text-align:center">Not another RAG chatbot.</h2>
+      <p class="lead mid">Most "AI knowledge" tools embed your documents and hope the model grabs the right chunk. The 1100 Brain is a governed system of record — structured, cited, and self-correcting.</p>
+    </div>
+    <div class="vs-grid">
+      <div class="vs-card bad">
+        <h3>Generic AI search / RAG</h3>
+        <ul class="vs-list">
+          <li><span class="ic">✕</span> Confidently hallucinates with no source</li>
+          <li><span class="ic">✕</span> Opaque vector blobs you can't read or audit</li>
+          <li><span class="ic">✕</span> Re-embeds everything; quietly drifts stale</li>
+          <li><span class="ic">✕</span> No notion of conflicting sources</li>
+          <li><span class="ic">✕</span> Ships your data to someone else's cloud</li>
+        </ul>
+      </div>
+      <div class="vs-card good">
+        <h3>The 1100 Brain</h3>
+        <ul class="vs-list">
+          <li><span class="ic">✓</span> Every claim cites a verifiable source — or isn't made</li>
+          <li><span class="ic">✓</span> Human-readable, fully owned and auditable</li>
+          <li><span class="ic">✓</span> Self-maintaining syncs keep it permanently current</li>
+          <li><span class="ic">✓</span> Authority rules resolve &amp; surface conflicts</li>
+          <li><span class="ic">✓</span> Runs private, on your own infrastructure</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section id="security">
+  <div class="wrap reveal">
+    <span class="eyebrow">Security &amp; deployment</span>
+    <h2 class="title">Your knowledge. Your infrastructure.<br><span class="gold">Your control.</span></h2>
+    <p class="lead" style="max-width:720px">The 1100 Brain runs entirely within your environment. Sensitive source material never leaves your perimeter, and you own every byte of what it produces.</p>
+    <div class="sec-grid">
+      <div class="sec-card"><div class="ico">🖥️</div><h4>Self-hosted</h4><p>Deploys to your cloud or on-prem. Single-instance to enterprise — your call, your tenancy.</p></div>
+      <div class="sec-card"><div class="ico">🔒</div><h4>Private by default</h4><p>Raw source material stays inside your perimeter. Nothing is shared outside your team.</p></div>
+      <div class="sec-card"><div class="ico">🔑</div><h4>Your credentials</h4><p>Connectors use your own API tokens with read-only scopes. Least-privilege from day one.</p></div>
+      <div class="sec-card"><div class="ico">📜</div><h4>Versioned &amp; auditable</h4><p>Plain, version-controlled files. Every change is tracked, diffable, reversible.</p></div>
     </div>
   </div>
 </section>
