@@ -163,6 +163,24 @@
   .stat .lbl{font-size:13px;color:var(--body);margin-top:10px;line-height:1.4}
   @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
 
+  /* ---------- PORTFOLIO ---------- */
+  .port-sec{background:linear-gradient(180deg,#1d1d20,#161618)}
+  .port-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:54px}
+  .pcard{
+    background:linear-gradient(180deg,rgba(51,54,65,.9),rgba(33,35,42,.9));
+    border:1px solid rgba(255,255,255,.07);border-top:3px solid var(--c);border-radius:16px;padding:24px 22px;
+    transition:transform .26s ease,box-shadow .26s ease,border-color .26s ease;display:flex;flex-direction:column;
+  }
+  .pcard:hover{transform:translateY(-6px);box-shadow:0 20px 46px rgba(0,0,0,.45);border-color:var(--c)}
+  .pcard .city{font-family:var(--font-head);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.13em;color:var(--c)}
+  .pcard h3{font-family:var(--font-head);font-weight:700;font-size:18px;color:#fff;margin:7px 0 0;letter-spacing:-.2px}
+  .pcard .sig{font-size:13.5px;color:var(--body);margin-top:11px;line-height:1.55;flex:1}
+  .pcard .sig b{color:var(--light);font-weight:500}
+  .pcard .stat{margin-top:16px;padding-top:13px;border-top:1px solid rgba(255,255,255,.07);font-size:12px;color:var(--light);display:flex;align-items:center;gap:7px}
+  .pcard .stat .pin{color:var(--c);font-weight:700}
+  @media(max-width:920px){.port-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.port-grid{grid-template-columns:1fr}}
+
   /* ---------- WHY ---------- */
   .why{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
   .why ul{list-style:none;margin-top:26px;display:grid;gap:16px}
@@ -208,8 +226,8 @@
     <nav class="nav-links">
       <a href="#solutions">Solutions</a>
       <a href="#brain">The Brain</a>
+      <a href="#portfolio">Portfolio</a>
       <a href="#loop">How it works</a>
-      <a href="#why">Why Endurance</a>
       <a href="#contact" class="btn btn-gold">Book a Walkthrough</a>
     </nav>
   </div>
@@ -447,6 +465,74 @@
       <div class="stat"><div class="big">2–4%</div><div class="lbl">Targeted labor &amp; food-cost margin recovery</div></div>
     </div>
     <p style="font-size:12.5px;color:#6a6b70;margin-top:18px">Illustrative targets for discussion — calibrated to the 1100 Group's actual numbers during scoping.</p>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="port-sec">
+  <div class="wrap reveal">
+    <span class="eyebrow">Built for all eight</span>
+    <h2 class="title">The portfolio <span class="gold">we're building for.</span></h2>
+    <p class="lead">Four brands, eight neighborhood restaurants, two states — each with its own character. The Brain learns every one of them, and every color below is a node feeding the center.</p>
+    <div class="port-grid">
+
+      <div class="pcard" style="--c:#C8202C">
+        <span class="city">Walnut Creek, CA</span>
+        <h3>Bar Camino</h3>
+        <p class="sig"><b>Mexican-Latin.</b> Quesabirria &amp; birria tacos, green posole, and craft margaritas. Taco Tuesdays, happy hour and reverse happy hour.</p>
+        <div class="stat"><span class="pin">★</span> Best Mexican &amp; Best Margaritas 2025 — Diablo Magazine</div>
+      </div>
+
+      <div class="pcard" style="--c:#FCB236">
+        <span class="city">Oakland, CA · Grand Ave</span>
+        <h3>The Star on Grand</h3>
+        <p class="sig"><b>Gourmet Chicago deep dish.</b> High ceilings, exposed brick and two full bars — the flagship and group home base on Grand Ave.</p>
+        <div class="stat"><span class="pin">★</span> 4.0★ · 1,150+ Yelp reviews</div>
+      </div>
+
+      <div class="pcard" style="--c:#ECC81C">
+        <span class="city">Alameda, CA · Park St</span>
+        <h3>The Star on Park</h3>
+        <p class="sig"><b>Deep dish in a restored bank.</b> Bank vaults, two marble bars and two levels of seating — "the holy grail of pizza," per the reviews.</p>
+        <div class="stat"><span class="pin">★</span> 700+ Yelp reviews · largest room</div>
+      </div>
+
+      <div class="pcard" style="--c:#AD7436">
+        <span class="city">Portland, OR · Pearl District</span>
+        <h3>The Star Portland</h3>
+        <p class="sig"><b>Deep dish + thin crust.</b> The brand's Oregon outpost since 2019, known for its signature cornmeal-dusted crust.</p>
+        <div class="stat"><span class="pin">★</span> 440+ Yelp reviews · est. 2019</div>
+      </div>
+
+      <div class="pcard" style="--c:#60C6C9">
+        <span class="city">San Francisco, CA · Valencia St</span>
+        <h3>Little Star Valencia</h3>
+        <p class="sig"><b>The original deep dish.</b> Classic and Little Star (spinach, ricotta, feta) on the famous cornmeal crust in the Mission.</p>
+        <div class="stat"><span class="pin">★</span> Best of the Bay · Travel Channel · 2,300+ reviews</div>
+      </div>
+
+      <div class="pcard" style="--c:#276144">
+        <span class="city">Albany, CA · Solano Ave</span>
+        <h3>Little Star Solano</h3>
+        <p class="sig"><b>Deep, thin &amp; Detroit-style.</b> Family-friendly neighborhood favorite with a big dining room and the signature red booth wall.</p>
+        <div class="stat"><span class="pin">★</span> 1,100+ Yelp reviews</div>
+      </div>
+
+      <div class="pcard" style="--c:#C5B176">
+        <span class="city">Oakland, CA · Piedmont Ave</span>
+        <h3>Cato's Ale House</h3>
+        <p class="sig"><b>Ale house since 1994.</b> 23 craft lines with a NorCal focus, the Cato Burger and Pliny pretzel, live music and trivia nights.</p>
+        <div class="stat"><span class="pin">★</span> 4.3★ · 760+ reviews · 23 taps</div>
+      </div>
+
+      <div class="pcard" style="--c:#E7E7E7">
+        <span class="city">Oakland, CA · Rockridge</span>
+        <h3>Ben 'N Nick's</h3>
+        <p class="sig"><b>Bar &amp; grill since 1997.</b> The "BN"-sauce cheeseburger, chicken pot pie, wings and hard-to-find beers — a half-block from Rockridge BART.</p>
+        <div class="stat"><span class="pin">★</span> Rockridge neighborhood staple, est. 1997</div>
+      </div>
+
+    </div>
   </div>
 </section>
 
