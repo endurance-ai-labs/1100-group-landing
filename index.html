@@ -145,6 +145,47 @@
   @media(max-width:920px){.sol-grid{grid-template-columns:repeat(2,1fr)}.card.anchor{grid-column:span 2}}
   @media(max-width:620px){.sol-grid{grid-template-columns:1fr}.card.anchor{grid-column:span 1;grid-template-columns:1fr}}
 
+  /* ---------- CONNECT / INTEGRATIONS ---------- */
+  .connect-sec{background:linear-gradient(180deg,#161618,#1a1a1c)}
+  .int-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:54px}
+  .int-card{
+    background:linear-gradient(180deg,rgba(51,54,65,.85),rgba(33,35,42,.9));
+    border:1px solid rgba(255,255,255,.07);border-top:3px solid var(--c,var(--gold));border-radius:16px;padding:24px 22px;
+    display:flex;flex-direction:column;transition:transform .26s ease,box-shadow .26s ease;
+  }
+  .int-card:hover{transform:translateY(-5px);box-shadow:0 18px 42px rgba(0,0,0,.4)}
+  .int-card .cat{font-family:var(--font-head);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--c,var(--gold))}
+  .int-card h3{font-family:var(--font-head);font-weight:700;font-size:17px;color:#fff;margin:6px 0 14px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;flex:1}
+  .chip{font-family:var(--font-head);font-size:12px;font-weight:500;color:var(--light);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:6px 11px;border-radius:30px}
+  .int-card .feeds{margin-top:16px;padding-top:13px;border-top:1px solid rgba(255,255,255,.07);font-size:12px;color:var(--c,var(--gold));font-family:var(--font-head);font-weight:600;letter-spacing:.02em}
+  @media(max-width:920px){.int-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.int-grid{grid-template-columns:1fr}}
+
+  .merge{text-align:center;color:var(--gold);font-size:30px;margin:26px 0 0;animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+  .brain-band{
+    margin-top:18px;border-radius:22px;padding:40px 34px;text-align:center;
+    background:radial-gradient(700px 300px at 50% 0%,rgba(252,178,54,.14),transparent 70%),linear-gradient(160deg,#202228,var(--slate));
+    border:1px solid rgba(252,178,54,.32);
+  }
+  .brain-band h3{font-family:var(--font-head);font-weight:800;font-size:clamp(22px,3vw,32px);color:#fff;letter-spacing:-.4px}
+  .brain-band h3 .gold{color:var(--gold)}
+  .brain-band p.bb-lead{color:var(--body);font-size:16px;max-width:640px;margin:14px auto 0}
+  .llm-points{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px;text-align:left}
+  .llm-points .pt{background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:20px}
+  .llm-points .pt .e{font-size:22px}
+  .llm-points .pt h4{font-family:var(--font-head);font-weight:700;font-size:15px;color:#fff;margin:10px 0 6px}
+  .llm-points .pt p{font-size:13.5px;color:var(--body);line-height:1.55}
+  @media(max-width:760px){.llm-points{grid-template-columns:1fr}}
+
+  .pred-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:30px;text-align:left}
+  .pred{background:var(--slate);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--gold);border-radius:12px;padding:18px 20px}
+  .pred .pt-tag{font-family:var(--font-head);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--gold)}
+  .pred p{font-size:14px;color:var(--light);margin-top:7px;line-height:1.55}
+  @media(max-width:620px){.pred-grid{grid-template-columns:1fr}}
+
   /* ---------- LOOP ---------- */
   .loop-sec{background:linear-gradient(180deg,#161618,#1d1d20)}
   .loop{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:54px}
@@ -226,8 +267,8 @@
     <nav class="nav-links">
       <a href="#solutions">Solutions</a>
       <a href="#brain">The Brain</a>
+      <a href="#connect">Integrations</a>
       <a href="#portfolio">Portfolio</a>
-      <a href="#loop">How it works</a>
       <a href="#contact" class="btn btn-gold">Book a Walkthrough</a>
     </nav>
   </div>
@@ -419,6 +460,136 @@
         <span class="tag">Growth</span>
         <h3>Loyalty &amp; Marketing Autopilot</h3>
         <p>One guest CRM and loyalty program across all eight restaurants, with AI running Taco Tuesday at Bar Camino, happy-hour, birthday and win-back campaigns automatically — and learning which offers actually bring guests back.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT / INTEGRATIONS -->
+<section id="connect" class="connect-sec">
+  <div class="wrap reveal">
+    <span class="eyebrow">Connect everything</span>
+    <h2 class="title">Every system you run —<br><span class="gold">wired into one Brain.</span></h2>
+    <p class="lead">We connect directly to the platforms you already use — OpenTable, Toast, DoorDash, Yelp, Google and the rest — through their APIs. Read-only and secure, data flows in automatically. No new software for your teams, no manual entry.</p>
+
+    <div class="int-grid">
+      <div class="int-card" style="--c:#C8202C">
+        <span class="cat">Reservations &amp; Waitlist</span>
+        <h3>One booking picture across all eight</h3>
+        <div class="chips">
+          <span class="chip">OpenTable ×6</span>
+          <span class="chip">Phone &amp; walk-in — Cato's</span>
+          <span class="chip">Phone &amp; walk-in — Ben 'N Nick's</span>
+          <span class="chip">Waitlists &amp; large parties</span>
+        </div>
+        <div class="feeds">→ feeds the Brain</div>
+      </div>
+
+      <div class="int-card" style="--c:#FCB236">
+        <span class="cat">POS &amp; Online Ordering</span>
+        <h3>Every ticket, every location</h3>
+        <div class="chips">
+          <span class="chip">Toast POS</span>
+          <span class="chip">Toast Online Ordering</span>
+          <span class="chip">Gift cards &amp; loyalty</span>
+          <span class="chip">Daily sales &amp; item mix</span>
+        </div>
+        <div class="feeds">→ feeds the Brain</div>
+      </div>
+
+      <div class="int-card" style="--c:#60C6C9">
+        <span class="cat">Delivery Marketplaces</span>
+        <h3>Off-premise sales, unified</h3>
+        <div class="chips">
+          <span class="chip">DoorDash</span>
+          <span class="chip">Uber Eats</span>
+          <span class="chip">Grubhub</span>
+          <span class="chip">Commissions &amp; margins</span>
+        </div>
+        <div class="feeds">→ feeds the Brain</div>
+      </div>
+
+      <div class="int-card" style="--c:#ECC81C">
+        <span class="cat">Reviews &amp; Reputation</span>
+        <h3>The voice of every guest</h3>
+        <div class="chips">
+          <span class="chip">Yelp</span>
+          <span class="chip">Google</span>
+          <span class="chip">Tripadvisor</span>
+          <span class="chip">Untappd — Cato's</span>
+        </div>
+        <div class="feeds">→ feeds the Brain</div>
+      </div>
+
+      <div class="int-card" style="--c:#AD7436">
+        <span class="cat">Back Office</span>
+        <h3>Labor, money &amp; supply</h3>
+        <div class="chips">
+          <span class="chip">Scheduling &amp; payroll</span>
+          <span class="chip">Accounting</span>
+          <span class="chip">Inventory &amp; purchasing</span>
+          <span class="chip">Vendor invoices</span>
+        </div>
+        <div class="feeds">→ feeds the Brain</div>
+      </div>
+
+      <div class="int-card" style="--c:#276144">
+        <span class="cat">Marketing &amp; Guest Data</span>
+        <h3>Who they are, what brings them back</h3>
+        <div class="chips">
+          <span class="chip">Email &amp; SMS</span>
+          <span class="chip">Loyalty &amp; CRM</span>
+          <span class="chip">Social &amp; web</span>
+          <span class="chip">Campaign results</span>
+        </div>
+        <div class="feeds">→ feeds the Brain</div>
+      </div>
+    </div>
+
+    <div class="merge">↓</div>
+
+    <div class="brain-band">
+      <h3>The 1100 Brain is the <span class="gold">sum of all of it.</span></h3>
+      <p class="bb-lead">Not a dashboard that shows you charts. A large language model trained on your actual operating data — so it understands your business in plain English, and it gets sharper every single day.</p>
+      <div class="llm-points">
+        <div class="pt">
+          <div class="e">🧩</div>
+          <h4>Trained on everything</h4>
+          <p>Every reservation, ticket, review, shift and invoice across all eight restaurants becomes one connected memory — not six silos and two notebooks.</p>
+        </div>
+        <div class="pt">
+          <div class="e">📈</div>
+          <h4>It compounds</h4>
+          <p>Because it's an LLM, more data makes it smarter. Every week it knows your guests, your menu and your patterns better than the week before.</p>
+        </div>
+        <div class="pt">
+          <div class="e">🔮</div>
+          <h4>Predicts &amp; recommends</h4>
+          <p>It doesn't just report what happened — it forecasts what's next and tells you what to do about it, location by location.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:34px">
+        <span class="eyebrow" style="color:var(--light);opacity:.7">What it surfaces — examples</span>
+        <div class="pred-grid">
+          <div class="pred">
+            <span class="pt-tag">Demand · Labor</span>
+            <p>"Rain forecast this Friday at The Star on Park. Trim one server on the floor and push deep-dish on DoorDash — protect the labor line without hurting covers."</p>
+          </div>
+          <div class="pred">
+            <span class="pt-tag">Reservations</span>
+            <p>"Tonight's party of 8 at The Star on Grand shows a high no-show risk. Auto-send a confirmation text now and hold the table accordingly."</p>
+          </div>
+          <div class="pred">
+            <span class="pt-tag">Food cost · Margin</span>
+            <p>"Mozzarella cost is climbing at Little Star Valencia this week. The vendor your Albany kitchen uses is cheaper — want to switch this order?"</p>
+          </div>
+          <div class="pred">
+            <span class="pt-tag">Guest recovery</span>
+            <p>"A 2-star review just hit Cato's about slow service. I've drafted a reply in Cato's voice and flagged tonight's GM to follow up."</p>
+          </div>
+        </div>
+        <p style="font-size:12px;color:#6a6b70;margin-top:16px">Illustrative of the predictive signals an LLM-based Brain surfaces once your systems are connected.</p>
       </div>
     </div>
   </div>
