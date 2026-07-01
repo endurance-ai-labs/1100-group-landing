@@ -251,7 +251,7 @@ footer { border-top: 1px solid var(--steel-800); padding: 56px var(--container-p
     </div>
 
     <!-- BRAIN CORE MOTIF -->
-    <div data-reveal style="position:relative;opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease-standard) .1s,transform .9s var(--ease-standard) .1s;display:flex;flex-direction:column;gap:26px;">
+    <div data-reveal style="position:relative;display:flex;flex-direction:column;gap:26px;">
       <div style="position:relative;width:100%;aspect-ratio:1/1;max-width:420px;margin-left:auto;">
         <svg viewBox="0 0 400 400" width="100%" height="100%">
           <defs><radialGradient id="bcore" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#C7A76C" stop-opacity="0.4"/><stop offset="100%" stop-color="#C7A76C" stop-opacity="0"/></radialGradient></defs>
@@ -624,7 +624,7 @@ footer { border-top: 1px solid var(--steel-800); padding: 56px var(--container-p
 (function() {
   // ── Scroll reveals ──
   const reveals = [...document.querySelectorAll('[data-reveal]')];
-  const reveal = el => { el.classList.add('visible'); };
+  const reveal = el => { el.classList.add('visible'); el.style.opacity = '1'; el.style.transform = 'none'; };
   const vh = window.innerHeight || 800;
   reveals.forEach(el => { if (el.getBoundingClientRect().top < vh * 0.92) reveal(el); });
   if ('IntersectionObserver' in window) {
