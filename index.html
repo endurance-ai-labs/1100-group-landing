@@ -211,6 +211,40 @@ footer { border-top: 1px solid var(--steel-800); padding: 56px var(--container-p
 <div class="grain"></div>
 <div style="position:relative;background:var(--ink);color:var(--bone);font-family:var(--font-sans);overflow-x:hidden;">
 
+<!-- ══ PASSWORD GATE ══ -->
+<div id="pw-gate" style="position:fixed;inset:0;z-index:99999;background:var(--ink);display:flex;align-items:center;justify-content:center;padding:24px;">
+  <div style="max-width:400px;width:100%;text-align:center;">
+    <img src="assets/logo-endurance-white.svg" alt="Endurance AI Labs" style="height:20px;margin:0 auto 30px;display:block;" />
+    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:16px;">Private preview &middot; for 1100 Group</div>
+    <h1 style="font-family:var(--font-display);font-size:40px;line-height:1.08;letter-spacing:-.02em;font-weight:400;color:var(--bone);margin:0 0 26px;">Enter password to continue.</h1>
+    <form id="pw-form" style="display:flex;flex-direction:column;gap:12px;">
+      <input id="pw-input" type="password" placeholder="Password" autocomplete="off" autofocus
+        style="font-family:var(--font-sans);font-size:16px;color:var(--bone);background:var(--ink-900);border:1px solid var(--steel-700);border-radius:2px;padding:14px 16px;outline:none;text-align:center;" />
+      <button type="submit" style="font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--ink);background:var(--bone);border:1px solid var(--bone);border-radius:2px;padding:14px;cursor:pointer;transition:background .2s,border-color .2s;" onmouseover="this.style.background='var(--signal)';this.style.borderColor='var(--signal)';" onmouseout="this.style.background='var(--bone)';this.style.borderColor='var(--bone)';">Unlock</button>
+    </form>
+    <div id="pw-err" style="font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;color:var(--rust);margin-top:14px;min-height:16px;opacity:0;transition:opacity .2s;">Incorrect password. Try again.</div>
+  </div>
+</div>
+<script>
+(function(){
+  var KEY='site_unlocked_1100', HASH='833aa183c7a872e49649a3e519a7b2e449340f57b6b159a767e006898943a7e4';
+  var gate=document.getElementById('pw-gate');
+  function unlock(){ gate.style.display='none'; document.documentElement.style.overflow=''; }
+  try{ if(sessionStorage.getItem(KEY)==='1'){ unlock(); return; } }catch(e){}
+  document.documentElement.style.overflow='hidden';
+  async function sha256(s){ var b=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return [].map.call(new Uint8Array(b),function(x){return x.toString(16).padStart(2,'0');}).join(''); }
+  var form=document.getElementById('pw-form'), input=document.getElementById('pw-input'), err=document.getElementById('pw-err');
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var val=input.value.trim(), ok=false;
+    try{ ok=(await sha256(val))===HASH; }catch(_){ ok=false; }
+    if(ok){ try{ sessionStorage.setItem(KEY,'1'); }catch(e){} unlock(); }
+    else { err.style.opacity='1'; input.value=''; input.focus(); }
+  });
+})();
+</script>
+
 <!-- ══ HEADER ══ -->
 <header data-header>
   <div class="header-inner">
