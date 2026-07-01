@@ -124,6 +124,8 @@ nav { display: flex; align-items: center; gap: 30px; }
 
 /* ── Display headings ── */
 .h-display { font-family: var(--font-display); font-size: clamp(38px,4.6vw,68px); line-height: 1.03; letter-spacing: -.02em; font-weight: 400; margin: 0; }
+.h-oneline { white-space: nowrap; font-size: clamp(30px,3.9vw,54px); }
+@media (max-width: 1000px){ .h-oneline { white-space: normal; font-size: clamp(32px,5vw,50px); } }
 
 /* ── CTA buttons ── */
 .btn-primary {
@@ -269,9 +271,9 @@ footer { border-top: 1px solid var(--steel-800); padding: 56px var(--container-p
           </g>
           <g fill="#171E33" stroke="#343430"><circle cx="200" cy="12" r="6"/><circle cx="333" cy="67" r="6"/><circle cx="388" cy="200" r="6"/><circle cx="333" cy="333" r="6"/><circle cx="200" cy="388" r="6"/><circle cx="67" cy="333" r="6"/><circle cx="12" cy="200" r="6"/><circle cx="67" cy="67" r="6"/></g>
           <circle cx="200" cy="200" r="120" fill="url(#bcore)"/>
-          <circle cx="200" cy="200" r="52" fill="#121829" stroke="#C7A76C" stroke-width="1.5"/>
-          <text x="200" y="196" fill="#F4F2ED" font-family="var(--font-mono)" font-size="13" letter-spacing="2" text-anchor="middle">1100</text>
-          <text x="200" y="214" fill="#C7A76C" font-family="var(--font-mono)" font-size="11" letter-spacing="3" text-anchor="middle">BRAIN</text>
+          <circle cx="200" cy="200" r="52" fill="#171E33" stroke="#C7A76C" stroke-width="1.5"/>
+          <text x="200" y="195" fill="#F4F2ED" font-family="'JetBrains Mono',ui-monospace,monospace" font-size="15" letter-spacing="2" text-anchor="middle">1100</text>
+          <text x="200" y="215" fill="#C7A76C" font-family="'JetBrains Mono',ui-monospace,monospace" font-size="11" letter-spacing="3" text-anchor="middle">BRAIN</text>
           <circle cx="200" cy="200" r="58" fill="none" stroke="#C7A76C" stroke-width="1"><animate attributeName="r" values="52;78" dur="2.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0" dur="2.8s" repeatCount="indefinite"/></circle>
         </svg>
       </div>
@@ -405,7 +407,7 @@ footer { border-top: 1px solid var(--steel-800); padding: 56px var(--container-p
   <div style="max-width:var(--container-max);margin:0 auto;">
     <div data-reveal style="max-width:820px;margin-bottom:56px;">
       <div class="eyebrow-signal">04 &mdash; Why it's a brain, not a dashboard</div>
-      <h2 class="h-display" style="color:var(--bone);">The 1100 Brain is the sum of all of it.</h2>
+      <h2 class="h-display h-oneline" style="color:var(--bone);">The 1100 Brain is the sum of all of it.</h2>
       <p style="font-size:19px;line-height:1.55;color:var(--steel-300);font-weight:300;margin:24px 0 0;">Not a dashboard that shows you charts. A large language model trained on your actual operating data &mdash; so it understands your business in plain English, and it gets sharper every single day.</p>
     </div>
     <div data-reveal class="grid-3" style="margin-bottom:48px;">
@@ -431,7 +433,7 @@ footer { border-top: 1px solid var(--steel-800); padding: 56px var(--container-p
   <div style="max-width:var(--container-max);margin:0 auto;">
     <div data-reveal style="max-width:720px;margin-bottom:56px;">
       <div class="eyebrow-muted">05 &mdash; How it feeds itself</div>
-      <h2 class="h-display">The flywheel: capture, learn, <span style="font-style:italic;color:#8a6d34;">act.</span></h2>
+      <h2 class="h-display h-oneline">The flywheel: capture, learn, <span style="font-style:italic;color:#8a6d34;">act.</span></h2>
       <p style="font-size:19px;line-height:1.55;color:var(--steel-600);font-weight:300;margin:24px 0 0;">The more the group operates, the smarter the Brain gets &mdash; and the smarter every location runs. One loop, eight restaurants, compounding daily.</p>
     </div>
     <div data-reveal style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:24px;">
@@ -449,7 +451,7 @@ footer { border-top: 1px solid var(--steel-800); padding: 56px var(--container-p
   <div style="max-width:var(--container-max);margin:0 auto;">
     <div data-reveal style="max-width:720px;margin-bottom:52px;">
       <div class="eyebrow-signal">06 &mdash; What it's worth</div>
-      <h2 class="h-display" style="color:var(--bone);">Where a connected brain pays off.</h2>
+      <h2 class="h-display h-oneline" style="color:var(--bone);">Where a connected brain pays off.</h2>
       <p style="font-size:18px;line-height:1.55;color:var(--steel-300);font-weight:300;margin:22px 0 0;">Targets we'd build toward together &mdash; measured per location and across the group.</p>
     </div>
     <div data-reveal style="display:grid;grid-template-columns:repeat(4,1fr);gap:36px;">
@@ -467,7 +469,7 @@ footer { border-top: 1px solid var(--steel-800); padding: 56px var(--container-p
   <div style="max-width:var(--container-max);margin:0 auto;">
     <div data-reveal style="max-width:760px;margin-bottom:52px;">
       <div class="eyebrow-muted">07 &mdash; Built for all eight</div>
-      <h2 class="h-display">The portfolio we're building for.</h2>
+      <h2 class="h-display h-oneline">The portfolio we're building for.</h2>
       <p style="font-size:19px;line-height:1.55;color:var(--steel-600);font-weight:300;margin:24px 0 0;">Four brands, eight neighborhood restaurants, two states &mdash; each with its own character. The Brain learns every one of them.</p>
     </div>
     <div data-reveal class="grid-4">
